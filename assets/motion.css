@@ -1,0 +1,71 @@
+/* Movimento: três gestos, os mesmos da marca.
+   1. Portada  - a troca de página passa por um arco abatido que sobe do chão.
+   2. Douramento - os fios de ouro se desenham da esquerda para a direita.
+   3. Papel    - a caixa do documento se desenrola a partir do fio de cima. */
+:root{--ease:cubic-bezier(.22,.7,.2,1);--ease-in:cubic-bezier(.6,0,.8,.3)}
+
+/* 1. Portada */
+.portada{position:fixed;inset:0;z-index:100;pointer-events:none;overflow:hidden;contain:strict}
+.portada b{position:absolute;left:50%;bottom:0;width:150vmax;height:150vmax;margin-left:-75vmax;
+  border-radius:50% 50% 0 0 / 34% 34% 0 0;background:var(--cal);box-shadow:0 0 0 1px var(--ouro);
+  transform:scale(0);transform-origin:50% 100%}
+.portada b::before{content:"";position:absolute;inset:1.2vmax 1.2vmax 0;border-radius:inherit;border:1px solid var(--ouro);border-bottom:0;opacity:.7}
+/* saída: o arco sobe e cobre a página */
+html.saindo .portada b{transform:scale(1);transition:transform .52s var(--ease-in)}
+html.saindo main{opacity:.55;transform:translateY(-10px);transition:opacity .4s,transform .52s var(--ease-in)}
+/* chegada: a página já vem coberta de cal e o véu se dissolve */
+.portada::after{content:"";position:absolute;inset:0;background:var(--cal);animation:veu .5s .05s var(--ease) both}
+@keyframes veu{from{opacity:1}to{opacity:0}}
+main>*{animation:assenta .7s var(--ease) both}
+main>*:nth-child(2){animation-delay:.08s}main>*:nth-child(3){animation-delay:.16s}main>*:nth-child(n+4){animation-delay:.22s}
+@keyframes assenta{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* 2. Douramento */
+.site-header{position:relative}
+.site-header::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--ouro);transform-origin:0 50%;animation:doura 1.3s .15s var(--ease) both}
+@keyframes doura{0%{transform:scaleX(0);opacity:1}60%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
+.section-head{border-top-color:transparent;position:relative}
+.section-head::before{content:"";position:absolute;left:0;right:0;top:-1px;height:1px;background:var(--ink-muted);transform-origin:0 50%;transition:transform 1s var(--ease)}
+.js .section-head:not(.visto)::before{transform:scaleX(0)}
+/* sublinhado do menu e dos títulos dos cartões: o fio corre em vez de aparecer */
+.nav a{background:linear-gradient(var(--ink),var(--ink)) 0 100%/0 1px no-repeat;padding-bottom:6px;transition:background-size .35s var(--ease),color .2s}
+.nav a:hover,.nav a:focus-visible{background-size:100% 1px;color:var(--ink)}
+.nav a[aria-current="page"]{text-decoration:none;background-size:100% 1px}
+.card h3{display:inline;background:linear-gradient(var(--ink),var(--ink)) 0 100%/0 1px no-repeat;transition:background-size .45s var(--ease)}
+a.card:hover h3,a.card:focus-visible h3{text-decoration:none;background-size:100% 1px}
+/* a miniatura: o arco sobe um pouco, como quem abre a porta */
+.th .a{transition:transform .5s var(--ease)}
+.th .a{transform:translateY(7%)}
+a.card:hover .th .a,a.card:focus-visible .th .a{transform:none}
+.btn{transition:transform .2s var(--ease),background-color .2s,color .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost:hover{background:var(--ink);color:var(--cal);border-color:var(--ink)}
+
+/* arco da capa: ergue-se do chão, e as linhas do documento se escrevem; a de ouro por último */
+.hero .arch{animation:ergue 1s .15s var(--ease) both}
+@keyframes ergue{from{clip-path:inset(100% 0 0 0 round 50% 50% 0 0/15% 15% 0 0)}to{clip-path:inset(0 0 0 0 round 50% 50% 0 0/15% 15% 0 0)}}
+.arch .doc i{transform-origin:0 50%;animation:escreve .6s var(--ease) both}
+.arch .doc i:nth-child(1){animation-delay:.75s}.arch .doc i:nth-child(2){animation-delay:.87s}.arch .doc i:nth-child(4){animation-delay:.99s}.arch .doc i:nth-child(5){animation-delay:1.11s}
+.arch .doc i.h{animation-delay:1.4s;animation-duration:.9s}
+@keyframes escreve{from{transform:scaleX(0)}to{transform:none}}
+
+/* 3. Papel e entrada dos blocos ao rolar (o texto nunca fica invisível: só assenta) */
+.js .rola{opacity:.3;transform:translateY(16px)}
+.js .rola.visto{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:calc(var(--i,0)*90ms)}
+.papel{border-top-color:transparent;position:relative}
+.papel::before{content:"";position:absolute;left:0;right:0;top:-1px;height:1px;background:var(--ouro);transform-origin:0 50%;transition:transform .7s var(--ease)}
+.papel{transition:clip-path .9s .45s var(--ease)}
+.js .papel{clip-path:inset(-2px 0 0 0)}
+.js .papel:not(.visto){clip-path:inset(-2px 0 78% 0)}
+.js .papel:not(.visto)::before{transform:scaleX(0)}
+.papel .hl{text-decoration-color:transparent;background:linear-gradient(var(--ouro),var(--ouro)) 0 100%/100% 2px no-repeat;transition:background-size .6s 1.3s var(--ease)}
+.js .papel:not(.visto) .hl{background-size:0 2px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .portada{display:none}
+  .js .rola,.js .papel:not(.visto){opacity:1;transform:none;clip-path:none}
+  .js .section-head:not(.visto)::before,.js .papel:not(.visto)::before{transform:none}
+  .js .papel:not(.visto) .hl{background-size:100% 2px}
+  .site-header::after{display:none}
+}
