@@ -9,7 +9,9 @@ if os.path.exists(dst):
 else: os.makedirs(dst)
 for n in os.listdir(src):
     p=os.path.join(src,n);(shutil.copytree if os.path.isdir(p) else shutil.copy2)(p,os.path.join(dst,n))
-HOJE='2026-11-09'
+import time
+HOJE=time.strftime('%Y-%m-%d')
+VERSAO=time.strftime('%Y%m%d%H%M')
 PESSOA={"@type":"Person","@id":base+"#erick","name":"Érick Camargo","jobTitle":"Advogado","url":base+"sobre/",
  "image":base+"assets/erick-camargo.jpg","identifier":"OAB/MG 224.100",
  "alumniOf":{"@type":"CollegeOrUniversity","name":"Universidade Federal de Minas Gerais"},
@@ -41,6 +43,7 @@ for f in sorted(glob.glob(dst+'/**/index.html',recursive=True)):
             d["mainEntityOfPage"]=url;d["publisher"]={"@id":base+"#erick"};d["image"]=img
             return '<script type="application/ld+json">'+json.dumps(d,ensure_ascii=False)+'</script>'
         s=re.sub(r'<script type="application/ld\+json">(.*?)</script>',fix,s,flags=re.S)
+    s=re.sub(r'(assets/[\w-]+\.(?:css|js))"',r'\1?v='+VERSAO+'"',s)
     s=s.replace('</head>',extra+'</head>',1)
     open(f,'w').write(s)
     paginas.append((rel,titulo,desc))
