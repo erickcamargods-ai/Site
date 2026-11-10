@@ -20,4 +20,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://erickcamargods-ai.github.io/site/sitemap.xml
+Sitemap: https://erickcamargo.adv.br/sitemap.xml
