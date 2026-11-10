@@ -4,7 +4,7 @@ import sys,os,re,json,shutil,html,glob
 src,dst,base=sys.argv[1],sys.argv[2],sys.argv[3].rstrip('/')+'/'
 if os.path.exists(dst):
     for n in os.listdir(dst):
-        if n=='.git':continue
+        if n in ('.git','.ferramentas','CNAME','README.md'):continue  # preservados no repositório
         p=os.path.join(dst,n);shutil.rmtree(p) if os.path.isdir(p) else os.remove(p)
 else: os.makedirs(dst)
 for n in os.listdir(src):
