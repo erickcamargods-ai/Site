@@ -14,6 +14,7 @@ PESSOA={"@type":"Person","@id":base+"#erick","name":"Érick Camargo","jobTitle":
  "image":base+"assets/erick-camargo.jpg","identifier":"OAB/MG 224.100",
  "alumniOf":{"@type":"CollegeOrUniversity","name":"Universidade Federal de Minas Gerais"},
  "knowsAbout":["Licitações","Contratos públicos","Lei 14.133/2021","Concessões","Parcerias público-privadas","Direito do consumidor","Serviços regulados","Pedágio free flow"],
+ "sameAs":["https://www.tiktok.com/@erickcamargoadv"],
  "address":{"@type":"PostalAddress","addressLocality":"Belo Horizonte","addressRegion":"MG","addressCountry":"BR"}}
 paginas=[]
 for f in sorted(glob.glob(dst+'/**/index.html',recursive=True)):
