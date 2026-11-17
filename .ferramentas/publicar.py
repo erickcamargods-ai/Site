@@ -29,11 +29,12 @@ for f in sorted(glob.glob(dst+'/**/index.html',recursive=True)):
     artigo='"@type": "Article"' in s or '"@type":"Article"' in s
     img=base+('assets/erick-camargo-perfil-lateral.jpg')
     extra=f'<link rel="canonical" href="{url}">\n'
+    extra+=f'<link rel="icon" href="{base}favicon.ico" sizes="48x48"><link rel="icon" type="image/png" sizes="96x96" href="{base}assets/favicon-96.png"><link rel="icon" type="image/png" sizes="192x192" href="{base}assets/favicon-192.png"><link rel="apple-touch-icon" href="{base}assets/apple-touch-icon.png"><meta name="theme-color" content="#3e6488">\n'
     if 'og:title' not in s:
         extra+=f'<meta property="og:type" content="website"><meta property="og:title" content="{html.escape(titulo)}"><meta property="og:description" content="{html.escape(desc)}"><meta property="og:locale" content="pt_BR">\n'
     extra+=f'<meta property="og:url" content="{url}"><meta property="og:image" content="{img}"><meta property="og:site_name" content="Érick Camargo Advogado"><meta name="twitter:card" content="summary_large_image">\n'
     if rel=='':
-        ld={"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":base+"#site","url":base,"name":"Érick Camargo Advogado","inLanguage":"pt-BR","publisher":{"@id":base+"#erick"}},PESSOA]}
+        ld={"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":base+"#site","url":base,"name":"Érick Camargo Advogado","alternateName":["Érick Camargo","erickcamargo.adv.br"],"inLanguage":"pt-BR","publisher":{"@id":base+"#erick"}},PESSOA]}
         extra+='<script type="application/ld+json">'+json.dumps(ld,ensure_ascii=False)+'</script>\n'
     if rel=='sobre/':
         ld={"@context":"https://schema.org","@type":"ProfilePage","url":url,"mainEntity":PESSOA}
