@@ -80,7 +80,7 @@ Allow: /
 
 Sitemap: '''+base+'sitemap.xml\n')
 # llms.txt: resumo do site para assistentes de IA
-ll='# Érick Camargo Advogado\n\n> Artigos sobre licitações, contratos públicos e serviços regulados (pedágio, energia, plano de saúde), escritos por Érick Camargo, advogado (OAB/MG 224.100), sempre a partir do documento original: a lei, o contrato, o edital, a resolução ou a decisão, citados com número e data.\n\n## Artigos\n\n'
+ll='# Érick Camargo Advogado\n\n> Artigos sobre licitações, contratos públicos e serviços regulados e direito do consumidor (bancário, energia, plano de saúde, pedágio), escritos por Érick Camargo, advogado (OAB/MG 224.100), sempre a partir do documento original: a lei, o contrato, o edital, a resolução ou a decisão, citados com número e data.\n\n## Artigos\n\n'
 for rel,t,d in paginas:
     if rel.startswith('artigos/') and rel!='artigos/': ll+=f'- [{t}]({base}{rel}): {d}\n'
 ll+='\n## Sobre o autor\n\n'
