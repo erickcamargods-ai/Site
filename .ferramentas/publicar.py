@@ -96,3 +96,8 @@ p404=re.sub(r'(href|src)="\.\./',r'\1="'+base,p404)
 p404=re.sub(r'<link rel="canonical"[^>]*>\n','',p404)
 open(dst+'/404.html','w').write(p404.replace('<head>','<head>\n<meta name="robots" content="noindex">',1))
 print(len(paginas),'páginas')
+# links internos limpos ("/sobre/", sem "index.html") e redirecionamento de ".../index.html"
+import subprocess
+aqui=os.path.dirname(os.path.abspath(__file__))
+subprocess.run([sys.executable,os.path.join(aqui,'limpar_links.py'),dst,base],check=True)
+subprocess.run([sys.executable,os.path.join(aqui,'indice_busca.py'),dst],check=True)

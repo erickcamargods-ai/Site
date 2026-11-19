@@ -8,7 +8,7 @@ for f in sorted(glob.glob('**/index.html',recursive=True),key=lambda x:(x.count(
     titulo='Início' if f=='index.html' else html.unescape(re.sub(r'<[^>]+>','',t.group(1))).strip()
     main=re.search(r'<main>(.*?)</main>',s,re.S).group(1)
     main=re.sub(r'<p class="nota">.*?</p>|<details.*?</details>|<aside>.*?</aside>|<script.*?</script>','',main,flags=re.S)
-    idx.append({'u':f,'t':titulo,'x':html.unescape(re.sub(r'\s+',' ',re.sub(r'<[^>]+>',' ',main))).strip()})
+    idx.append({'u':f[:-len('index.html')],'t':titulo,'x':html.unescape(re.sub(r'\s+',' ',re.sub(r'<[^>]+>',' ',main))).strip()})
 js=open('assets/busca.js').read()
 js=re.sub(r'var IDX=.*?;\n','var IDX='+json.dumps(idx,ensure_ascii=False).replace('\\','\\\\')+';\n',js,count=1,flags=re.S)
 open('assets/busca.js','w').write(js)
