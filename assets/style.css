@@ -208,7 +208,8 @@ img.retrato{display:block;width:240px;height:auto;padding:0;object-fit:cover}
 }
 
 .atu-areas{padding-top:0}
-.areas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:20px}
+.areas-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start}
+@media (max-width:760px){.areas-grid{grid-template-columns:minmax(0,1fr)}}
 .area-x{background:var(--cal-raised);border:1px solid var(--line);display:grid;align-content:start;cursor:pointer;
   transition:border-color .25s ease,transform .25s ease,box-shadow .25s ease}
 .area-x:hover{border-color:var(--ataide);transform:translateY(-3px);box-shadow:0 10px 24px -18px var(--ink)}
